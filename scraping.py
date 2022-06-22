@@ -1,4 +1,5 @@
 #import dependencies
+from matplotlib.pyplot import title
 from splinter import Browser
 from bs4 import BeautifulSoup as soup
 import pandas as pd
@@ -11,6 +12,7 @@ def scrape_all():
     browser = Browser('chrome', **executable_path, headless=True)
 
     news_title, news_paragraph = mars_news(browser)
+    hemispheres = mars_hemispheres(browser)
 
     # Run all scraping functions and store results in a dictionary
     data = {
@@ -18,8 +20,11 @@ def scrape_all():
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
-        "last_modified": dt.datetime.now()
+        "last_modified": dt.datetime.now(),
+
+        "hemispheres": hemispheres
     }
+        
 
     # Stop webdriver and return data
     browser.quit()
@@ -94,10 +99,42 @@ def mars_facts():
     df.set_index('Description', inplace=True)
 
     # Convert dataframe into HTML format, add bootstrap
-    return df.to_html(classes="table table-striped")
+    return df.to_html(classes="table table-striped(odd)")
+
+def mars_hemispheres(browser):
+    #visit url
+    url = 'https://marshemispheres.com/'
+    browser.visit(url)
+
+    hemisphere_img_urls = []
+
+    #find the tags that hold the link to full resolution images
+    links = browser.find_by_css("a.product-item img", wait_time=1)
+
+    for result in range(len(links)):
+        #create an empty dict
+        hemispheres  = {}
+        
+        #find the elementts on each loop.
+        browser.find_by_css("a.product-item img")[result].click()
+        
+        #find the full resolution image
+        image = browser.find_by_text('Sample').first
+        hemispheres['image_url'] = image['href']
+        
+        #Get the title for the image
+        hemispheres['title'] = browser.find_by_css('h2.title').text
+        
+        # add URL and title to list
+        hemisphere_img_urls.append(hemispheres)
+        
+        #navigate back
+        browser.back()
+    
+    return hemisphere_img_urls
+
 
 if __name__ == "__main__":
-
-    # If running as script, print scraped data
+ # If running as script, print scraped data
     print(scrape_all())
     
