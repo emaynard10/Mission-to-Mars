@@ -1,7 +1,7 @@
 # Mission-to-Mars
 ![marsjumbo](https://user-images.githubusercontent.com/99676466/175110874-b8a89197-0948-4940-9188-f8b1a0361394.jpeg)
 
-Created a web application with data scraped from various websites presented on an html file.
+Use BeautifulSoup and Splinter to scrape full-resolution images of Mars’s hemispheres and the titles of those images, store the scraped data on a Mongo database, use a web application to display the data, and alter the design of the web app to accommodate these images. Use Bootsrap to help style the website. 
 
 ### Tools: 
 Jupyter Notebooks, Beautiful Soup, Splinter, MongoDB, Pandas
@@ -27,7 +27,7 @@ df.set_index('description', inplace=True)
 
 ![Screen Shot 2022-06-22 at 1 02 22 PM](https://user-images.githubusercontent.com/99676466/175116073-f611a607-85ce-4d5c-b3f0-227fac51a50b.png)
 
-In order to retrieve the full resolution images of the four Mars hemispheres, I visted [Mars Hemisheres](https://marshemispheres.com/) webpage; by clicking on each thumbnail image the full resolution image is displayed. With an empty list to store the images and their titles as a dictionary, I used a for loop to iterate through the four thumbnails. After checking this code all worked in jupyter notebook, I download the code as a python file and continued in VS Code by creating functions, linking the scraping.py file to an app.py to run the website through Flask, and creating an HTML file to display the information. To style the html, I used Bootstrap.
+In order to retrieve the full resolution images of the four Mars hemispheres, I visted [Mars Hemisheres](https://marshemispheres.com/) webpage; by clicking on each thumbnail image the full resolution image is displayed. With an empty list to store the images and their titles as a dictionary, I used a for loop to iterate through the four thumbnails. After checking this code all worked in jupyter notebook, I download the code as a python file and continued in VS Code by creating functions, linking the scraping.py file to an app.py to run the website through Flask, and creating an HTML file to display the information. To style the html, I used Bootstrap. PyMongo was used to establish a connection with MongoDB in order to keep the results in a database. The code renders the HTML file with the records in the database. The page includes a button to 'scrape new data' to get the most up to date images and news articles. 
 
-PyMongo was used to establish a connection with MongoDB in order to keep the results in a database. The code renders the HTML file with the records in the database. The page includes a button to 'scrape new data' to get the most up to date images and news articles. 
+
 
